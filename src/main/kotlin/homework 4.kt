@@ -40,3 +40,5 @@ val long5: Long = 123456789123456789L
 val float6: Float = 6.626f
 val double6: Double = 0.007
 val string8: String = "Android Studio"
+
+-
