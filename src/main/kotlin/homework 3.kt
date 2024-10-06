@@ -2,7 +2,7 @@ package com.lotus
 
 const val event: String = "Hackathon Survival" // Название мероприятия
 val dateEvent: String = "15.09.2024" // Дата проведения
-lateinit var locationEvent: String = "Sinopskaya, 22" // Место проведения
+lateinit var locationEvent: String// Место проведения
 val budgetEvent: Int = 300000 // Подробный бюджет мероприятия, включая расходы на оборудование, кейтеринг и другие операционные расходы.
 var numberOfParticipants: Int = 0 //Количество участников
 var duration: Int = 8*60*60 //Длительность хакатона
@@ -17,7 +17,7 @@ val listOfTasks: String = ""// Перечень задач
 val evacuationPlan: String = ""// План эвакуации
 var listAvailableEquipment: String = ""// Список доступного оборудования
 var listFreeEquipment: String = ""// Список свободного оборудования
-lateinit var mealSchedule: String = ""// График питания участников (зависит от поставщика питания, определяемого за неделю до начала)
+lateinit var mealSchedule: String =// График питания участников (зависит от поставщика питания, определяемого за неделю до начала)
 var emergencyPlan: String = ""// План мероприятий на случай сбоев
 val listExperts: String = ""// Список экспертов и жюри
 lateinit var MethodsOfCollectingFeedback: String// Методы и процедуры для сбора отзывов от участников и гостей, включая анонимные опросы и интервью.
