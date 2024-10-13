@@ -1,5 +1,7 @@
 package com.lotus.homework9
 
+import kotlin.math.absoluteValue
+
 fun main() {
     val size = 6  // Размер сердечка
 

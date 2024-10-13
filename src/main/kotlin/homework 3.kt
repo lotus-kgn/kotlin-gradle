@@ -17,7 +17,7 @@ val listOfTasks: String = ""// Перечень задач
 val evacuationPlan: String = ""// План эвакуации
 var listAvailableEquipment: String = ""// Список доступного оборудования
 var listFreeEquipment: String = ""// Список свободного оборудования
-lateinit var mealSchedule: String =// График питания участников (зависит от поставщика питания, определяемого за неделю до начала)
+var mealSchedule: String = ""// График питания участников (зависит от поставщика питания, определяемого за неделю до начала)
 var emergencyPlan: String = ""// План мероприятий на случай сбоев
 val listExperts: String = ""// Список экспертов и жюри
 lateinit var MethodsOfCollectingFeedback: String// Методы и процедуры для сбора отзывов от участников и гостей, включая анонимные опросы и интервью.
@@ -48,5 +48,3 @@ val detailedPlan: String = ""// Подробный план хакатона, в
 var specialQuest: String = ""// Имя знаменитого специального гостя, которое будет объявлено за день до мероприятия.
 val maximumNumberOfPeople: Int = 500// Максимальное количество людей, которое может вместить место проведения.
 var numberOfHours: Int = 4*60*60// Стандартное количество часов, отведенное каждой команде для работы над проектом.
-
--
