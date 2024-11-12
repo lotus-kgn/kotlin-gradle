@@ -1,145 +1,247 @@
 package com.lotus.homework17
 
-// Животные и Их Звуки
+// Задание № 1
 
-// Определяем базовый класс Animal
-open class Animal {
-    open fun makeSound() {
-        println("This animal makes no sound.")
-    }
-}
-
-// Подкласс Dog переопределяет метод makeSound
-class Dog : Animal() {
-    override fun makeSound() {
-        println("\u001B[33mBark\u001B[0m") // желтый цвет
-    }
-}
-
-// Подкласс Cat переопределяет метод makeSound
-class Cat : Animal() {
-    override fun makeSound() {
-        println("\u001B[32mMeow\u001B[0m") // зеленый цвет
-    }
-}
-
-// Подкласс Bird переопределяет метод makeSound
-class Bird : Animal() {
-    override fun makeSound() {
-        println("\u001B[36mTweet\u001B[0m") // голубой цвет
-    }
-}
-
-fun main() {
-    // Создаем список животных
-    val animals: List<Animal> = listOf(Dog(), Cat(), Bird())
-
-    // Вызываем метод makeSound() для каждого животного
-    for (animal in animals) {
-        animal.makeSound()
-    }
-}
-
-
-// Геометрические Фигуры и Их Площадь
-import kotlin.math.PI
-import kotlin.math.sin
-
-// Определяем абстрактный класс Shape
-abstract class Shape {
+// Базовый класс "Геометрическая Фигура"
+open class GeometricShape(
+    val name: String
+) {
     open fun area(): Double {
+        return 0.0
+    }
+
+    open fun perimeter(): Double {
         return 0.0
     }
 }
 
-// Подкласс Circle с радиусом и расчетом площади
-class Circle(private val radius: Double) : Shape() {
+// Производный класс "Многоугольник"
+open class Polygon(
+    name: String,
+    val numberOfSides: Int
+) : GeometricShape(name) {
+    override fun perimeter(): Double {
+        // Пример базового поведения для многоугольников (реализация может быть изменена в производных классах)
+        return 0.0
+    }
+}
+
+// Производный класс "Круг"
+class Circle(
+    val radius: Double
+) : GeometricShape("Circle") {
     override fun area(): Double {
-        return PI * radius * radius
+        return Math.PI * radius * radius
+    }
+
+    override fun perimeter(): Double {
+        return 2 * Math.PI * radius
     }
 }
 
-// Подкласс Square с длиной стороны и расчетом площади
-class Square(private val side: Double) : Shape() {
+// Дополнительное разветвление для класса "Многоугольник" — "Треугольник"
+class Triangle(
+    val sideA: Double,
+    val sideB: Double,
+    val sideC: Double
+) : Polygon("Triangle", 3) {
     override fun area(): Double {
-        return side * side
+        val s = (sideA + sideB + sideC) / 2
+        return Math.sqrt(s * (s - sideA) * (s - sideB) * (s - sideC))
+    }
+
+    override fun perimeter(): Double {
+        return sideA + sideB + sideC
     }
 }
 
-// Подкласс Triangle с двумя сторонами и углом между ними для расчета площади
-class Triangle(private val sideA: Double, private val sideB: Double, private val angleInDegrees: Double) : Shape() {
+// Дополнительное разветвление для класса "Многоугольник" — "Четырехугольник"
+open class Quadrilateral(
+    val side1: Double,
+    val side2: Double,
+    val side3: Double,
+    val side4: Double
+) : Polygon("Quadrilateral", 4) {
+    override fun perimeter(): Double {
+        return side1 + side2 + side3 + side4
+    }
+}
+
+// Пример класса "Прямоугольник", производного от "Четырехугольник"
+class Rectangle(
+    val length: Double,
+    val width: Double
+) : Quadrilateral(length, width, length, width) {
     override fun area(): Double {
-        val angleInRadians = Math.toRadians(angleInDegrees)
-        return 0.5 * sideA * sideB * sin(angleInRadians)
-    }
-}
-
-fun main() {
-    // Создаем список фигур с разными параметрами
-    val shapes: List<Shape> = listOf(
-        Circle(5.0),
-        Square(4.0),
-        Triangle(3.0, 4.0, 90.0)
-    )
-
-    // Выводим площадь каждой фигуры
-    for (shape in shapes) {
-        println("Площадь фигуры: ${shape.area()}")
+        return length * width
     }
 }
 
 
-// Принтер
-// Абстрактный класс Printer
-abstract class Printer {
-    // Абстрактный метод печати, который должны реализовать наследники
-    abstract fun print(text: String)
+// Базовый класс "Учебное Заведение"
+open class EducationalInstitution(
+    val name: String,
+    val location: String
+) {
+    open fun getInstitutionType(): String {
+        return "Образовательное заведение"
+    }
 
-    // Защищенный метод для разбиения текста на слова
-    protected fun splitTextToWords(text: String): List<String> {
-        return text.split(" ")
+    open fun getDetails(): String {
+        return "Название: $name, Местоположение: $location"
     }
 }
 
-// Класс LaserPrinter с черным текстом на белом фоне
-class LaserPrinter : Printer() {
-    override fun print(text: String) {
-        val words = splitTextToWords(text)
-        for (word in words) {
-            println("\u001B[30;47m$word\u001B[0m") // Черный текст на белом фоне
-        }
+// Производный класс "Школа"
+open class School(
+    name: String,
+    location: String,
+    val level: String // начальная, средняя, старшая
+) : EducationalInstitution(name, location) {
+    override fun getInstitutionType(): String {
+        return "Школа ($level)"
     }
 }
 
-// Класс InkjetPrinter с разноцветным текстом на цветном фоне
-class InkjetPrinter : Printer() {
-    private val colorPairs = listOf(
-        "\u001B[31;47m", // Красный текст на белом фоне
-        "\u001B[32;43m", // Зеленый текст на желтом фоне
-        "\u001B[34;45m", // Синий текст на фиолетовом фоне
-        "\u001B[35;42m", // Фиолетовый текст на зеленом фоне
-        "\u001B[36;41m"  // Голубой текст на красном фоне
-    )
+// Производный класс "Университет"
+open class University(
+    name: String,
+    location: String,
+    val accreditationLevel: String // бакалавриат, магистратура, докторантура
+) : EducationalInstitution(name, location) {
+    override fun getInstitutionType(): String {
+        return "Университет"
+    }
 
-    override fun print(text: String) {
-        val words = splitTextToWords(text)
-        var colorIndex = 0
-        for (word in words) {
-            val colorCode = colorPairs[colorIndex % colorPairs.size]
-            println("$colorCode$word\u001B[0m") // Цветное слово
-            colorIndex++
-        }
+    open fun getAccreditation(): String {
+        return "Уровень аккредитации: $accreditationLevel"
     }
 }
 
-fun main() {
-    val text = "This is a long text that we are going to print using both printers to see the color differences"
+// Дополнительное разветвление для "Университет" — "Факультет"
+class Faculty(
+    name: String,
+    location: String,
+    accreditationLevel: String,
+    val facultyName: String,
+    val departments: List<String> // список кафедр
+) : University(name, location, accreditationLevel) {
+    override fun getDetails(): String {
+        return super.getDetails() + ", Факультет: $facultyName, Кафедры: ${departments.joinToString()}"
+    }
+}
 
-    println("Laser Printer Output:")
-    val laserPrinter = LaserPrinter()
-    laserPrinter.print(text)
+// Производный класс "Колледж"
+open class College(
+    name: String,
+    location: String,
+    val programType: String // профессиональная подготовка, прикладное образование
+) : EducationalInstitution(name, location) {
+    override fun getInstitutionType(): String {
+        return "Колледж ($programType)"
+    }
+}
 
-    println("\nInkjet Printer Output:")
-    val inkjetPrinter = InkjetPrinter()
-    inkjetPrinter.print(text)
+// Дополнительное разветвление для "Школа" — "Специализированная Школа"
+class SpecializedSchool(
+    name: String,
+    location: String,
+    level: String,
+    val specialization: String // например, искусство, спорт
+) : School(name, location, level) {
+    override fun getDetails(): String {
+        return super.getDetails() + ", Специализация: $specialization"
+    }
+}
+
+
+// Базовый класс "Мебель"
+open class Furniture(
+    val material: String,
+    val color: String
+) {
+    open fun getDescription(): String {
+        return "Материал: $material, Цвет: $color"
+    }
+}
+
+// Производный класс "Стол"
+open class Table(
+    material: String,
+    color: String,
+    val shape: String, // круглый, квадратный, прямоугольный
+    val height: Double
+) : Furniture(material, color) {
+    override fun getDescription(): String {
+        return super.getDescription() + ", Форма: $shape, Высота: $height см"
+    }
+}
+
+// Дополнительное разветвление для "Стол" — "Обеденный Стол"
+class DiningTable(
+    material: String,
+    color: String,
+    shape: String,
+    height: Double,
+    val seatingCapacity: Int // количество мест
+) : Table(material, color, shape, height) {
+    override fun getDescription(): String {
+        return super.getDescription() + ", Количество мест: $seatingCapacity"
+    }
+}
+
+// Производный класс "Стул"
+open class Chair(
+    material: String,
+    color: String,
+    val hasBackrest: Boolean, // с спинкой или без
+    val isFoldable: Boolean
+) : Furniture(material, color) {
+    override fun getDescription(): String {
+        val backrest = if (hasBackrest) "Со спинкой" else "Без спинки"
+        val foldable = if (isFoldable) "Складной" else "Нескладной"
+        return super.getDescription() + ", $backrest, $foldable"
+    }
+}
+
+// Дополнительное разветвление для "Стул" — "Офисный Стул"
+class OfficeChair(
+    material: String,
+    color: String,
+    hasBackrest: Boolean,
+    isFoldable: Boolean,
+    val hasWheels: Boolean, // наличие колес
+    val adjustableHeight: Boolean // возможность регулировки высоты
+) : Chair(material, color, hasBackrest, isFoldable) {
+    override fun getDescription(): String {
+        val wheels = if (hasWheels) "На колесиках" else "Без колесиков"
+        val adjustable = if (adjustableHeight) "С регулировкой высоты" else "Без регулировки высоты"
+        return super.getDescription() + ", $wheels, $adjustable"
+    }
+}
+
+// Производный класс "Шкаф"
+open class Cabinet(
+    material: String,
+    color: String,
+    val doors: Int, // количество дверей
+    val hasShelves: Boolean
+) : Furniture(material, color) {
+    override fun getDescription(): String {
+        val shelves = if (hasShelves) "С полками" else "Без полок"
+        return super.getDescription() + ", Дверей: $doors, $shelves"
+    }
+}
+
+// Дополнительное разветвление для "Шкаф" — "Книжный Шкаф"
+class Bookshelf(
+    material: String,
+    color: String,
+    doors: Int,
+    hasShelves: Boolean,
+    val shelfCount: Int // количество полок
+) : Cabinet(material, color, doors, hasShelves) {
+    override fun getDescription(): String {
+        return super.getDescription() + ", Количество полок: $shelfCount"
+    }
 }
